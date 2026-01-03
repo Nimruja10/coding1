@@ -1,56 +1,51 @@
+import java.io.*;
 import java.util.*;
 
-public class Solution {
-    public static void main(String args[]) {
+public class Solution
+{
+    public static void main(String args[])
+    {
         Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
 
-        int N;
-        N = sc.nextInt();
+        for(int cases = 1; cases <= t; cases++)
+        {
+            int n = sc.nextInt();
+            int[] a = new int[n];
+            int sum = 0;
 
-        int[] arr = new int[N];
+            for(int i = 0; i < n; i++)
+            {
+                a[i] = sc.nextInt();
+                sum = sum + a[i];
+            }
 
-        
-        for (int i = 0; i < N; i++) {
-            arr[i] = sc.nextInt();
-        }
+            if(n == 1)
+            {
+                System.out.println("YES");
+                continue;
+            }
 
-    
-        int max = 0;
-        for (int i = 0; i < N; i++) {
-            if (max < arr[i])
-                max = arr[i];
-        }
+            int i, prevsum = 0;
+            for(i = 0; i < n - 1; i++)
+            {
+                sum = sum - a[i];
+                if(sum == prevsum)
+                {
+                    System.out.println("YES");
+                    break;
+                }
+                prevsum = prevsum + a[i];
+            }
 
-        int[] flag = new int[max + 1];
-
-        
-        for (int j = 0; j <= max; j++) {
-            flag[j] = 0;
-        }
-
-        for (int j = 0; j < N; j++) {
-            flag[arr[j]] = flag[arr[j]] + 1;
-        }
-
-        int MissedCount = 0;
-        int[] missedEles = new int[max];
-
-        
-        for (int j = 1; j <= max; j++) {
-            if (flag[j] == 0) {
-                missedEles[MissedCount] = j;
-                MissedCount = MissedCount + 1;
+            if(i == n - 1)
+            {
+                if(sum == 0)
+                    System.out.println("YES");
+                else
+                    System.out.println("NO");
             }
         }
-
-        if (MissedCount == 0) {
-            System.out.println("No Missed Elements");
-            return;
-        }
-
-        
-        for (int k = 0; k < MissedCount; k++) {
-            System.out.println(missedEles[k]);
-        }
+        sc.close();
     }
 }
